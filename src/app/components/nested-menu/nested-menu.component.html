@@ -1,0 +1,22 @@
+<header class="nested-menu">
+  <ul>
+    <ng-container *ngFor="let item of firstLevel; trackBy: trackByNode">
+      <ng-container *ngTemplateOutlet="node; context: { item: item }">
+      </ng-container>
+    </ng-container>
+  </ul>
+</header>
+
+<ng-template #node let-item="item">
+  <ng-container *ngIf="nestedMenu | getChildNodes: item.id as childNodes">
+    <li [class.no-arrow]="!childNodes.length">
+      <a>{{ item.name }}</a>
+      <ul *ngIf="childNodes.length">
+        <ng-container *ngFor="let child of childNodes; trackBy: trackByNode">
+          <ng-container *ngTemplateOutlet="node; context: { item: child }">
+          </ng-container>
+        </ng-container>
+      </ul>
+    </li>
+  </ng-container>
+</ng-template>
